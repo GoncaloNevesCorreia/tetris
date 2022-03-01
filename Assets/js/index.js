@@ -10,33 +10,37 @@ const board = new Board(rows, columns, ctx);
 board.newGame();
 
 document.addEventListener("keydown", (event) => {
-    switch (event.code) {
-        case "ArrowDown":
-            board.currentPiece.moveDown();
-            break;
-        case "ArrowLeft":
-            board.currentPiece.moveLeft();
-            break;
-        case "ArrowRight":
-            board.currentPiece.moveRight();
-            break;
-        case "ArrowUp":
-            board.currentPiece.rotate();
-            break;
-    }
+  const piece = board.currentPiece;
 
-    board.render();
+  switch (event.code) {
+    case "ArrowDown":
+      // console.log(piece.collision(piece.x, piece.y++, piece.currentTetramino));
+
+      // if (!piece.collision(piece.x, piece.y++, piece.currentTetramino))
+      piece.moveDown();
+      break;
+    case "ArrowLeft":
+      piece.moveLeft();
+      break;
+    case "ArrowRight":
+      piece.moveRight();
+      break;
+    case "ArrowUp":
+      piece.rotate();
+      break;
+  }
+  board.render();
 });
 
 var lastAnimationTime = Date.now();
 function startAnimationFrames() {
-    const now = Date.now();
-    const delta = now - lastAnimationTime;
-    if (delta > 1000) {
-        board.currentPiece.moveDown();
-        board.render();
-        lastAnimationTime = Date.now();
-    }
-    requestAnimationFrame(startAnimationFrames);
+  const now = Date.now();
+  const delta = now - lastAnimationTime;
+  if (delta > 1000) {
+    board.currentPiece.moveDown();
+    board.render();
+    lastAnimationTime = Date.now();
+  }
+  requestAnimationFrame(startAnimationFrames);
 }
-startAnimationFrames();
+// startAnimationFrames();
