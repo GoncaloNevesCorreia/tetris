@@ -1,46 +1,46 @@
-import { Board } from "./board.js";
+import { Tetris } from "./tetris.js";
 
 const canvas = document.querySelector("#board");
 const ctx = canvas.getContext("2d");
+const scoreBoard = document.querySelector("#score");
 
 const rows = 20;
 const columns = 10;
 
-const board = new Board(rows, columns, ctx);
-board.newGame();
+const tetris = new Tetris(rows, columns, ctx, scoreBoard);
+tetris.newGame();
 
-document.addEventListener("keydown", (event) => {
-  const piece = board.currentPiece;
+document.addEventListener("keydown", ({ code }) => {
+    if (!tetris.isValidKeyPress(code)) return;
+    tetris.movePiece(code);
+    if (tetris.pieceCollided) {
+        tetris.checkGameState();
+        if (tetris.gameOver) {
+            alert("Game Over!");
+            tetris.newGame();
+            return;
+        }
 
-  switch (event.code) {
-    case "ArrowDown":
-      // console.log(piece.collision(piece.x, piece.y++, piece.currentTetramino));
-
-      // if (!piece.collision(piece.x, piece.y++, piece.currentTetramino))
-      piece.moveDown();
-      break;
-    case "ArrowLeft":
-      piece.moveLeft();
-      break;
-    case "ArrowRight":
-      piece.moveRight();
-      break;
-    case "ArrowUp":
-      piece.rotate();
-      break;
-  }
-  board.render();
+        tetris.randomPiece();
+    }
 });
 
 var lastAnimationTime = Date.now();
 function startAnimationFrames() {
-  const now = Date.now();
-  const delta = now - lastAnimationTime;
-  if (delta > 1000) {
-    board.currentPiece.moveDown();
-    board.render();
-    lastAnimationTime = Date.now();
-  }
-  requestAnimationFrame(startAnimationFrames);
+    const now = Date.now();
+    const delta = now - lastAnimationTime;
+    if (delta > 500) {
+        simulateArrowDown();
+        lastAnimationTime = Date.now();
+    }
+    requestAnimationFrame(startAnimationFrames);
 }
 // startAnimationFrames();
+
+function simulateArrowDown() {
+    document.dispatchEvent(
+        new KeyboardEvent("keydown", {
+            code: "ArrowDown",
+        })
+    );
+}

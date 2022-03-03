@@ -1,11 +1,37 @@
 body {
+    margin: 0;
+    font-family: Helvetica;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+#game {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    align-items: flex-start;
 }
 
 #board {
     border: 1px solid black;
+}
+
+.side-container {
+    width: 200px;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin: 0 50px;
+    padding: 1rem;
+}
+
+.side-container .side-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.side-container #score {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
