@@ -1,16 +1,16 @@
 import { Square } from "./square.js";
 
-class Board {
+class Board extends Square {
     constructor(rows, columns, ctx) {
-        this.board = [];
+        super(ctx);
         this.rows = rows;
         this.columns = columns;
+        this.board = [];
         this.emptyCode = 0;
-        this.ctx = ctx;
         this.piecePositions = [];
     }
 
-    create() {
+    newBoard() {
         this.board = [];
         for (let i = 0; i < this.rows; i++) {
             this.board.push(new Array(this.columns).fill(this.emptyCode));
@@ -18,9 +18,8 @@ class Board {
     }
 
     render() {
-        const square = new Square(this.ctx);
         this.board.forEach((row, y) =>
-            row.forEach((value, x) => square.draw(x, y, value))
+            row.forEach((value, x) => this.draw(x, y, value))
         );
     }
 

@@ -1,9 +1,8 @@
-import tetraminosList from "./data/tetraminos.json" assert { type: "json" };
-
 class Piece {
-    constructor(code) {
-        this.color = tetraminosList[code].color;
-        this.rotations = tetraminosList[code].rotations;
+    constructor(code, tetramino) {
+        this.color = tetramino.color;
+        this.rotations = tetramino.rotations;
+        this.display = tetramino.display;
         this.rotationIndex = 0;
         this.rotation = this.rotations[this.rotationIndex];
         this.code = code;

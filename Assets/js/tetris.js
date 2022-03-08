@@ -1,9 +1,11 @@
-import { Piece } from "./Piece.js";
-import { Board } from "./board.js";
+import { Board } from "./board/index.js";
+import { Pieces } from "./pieces/index.js";
 
 class Tetris {
-    constructor(elements) {
+    constructor(elements, columns, rows, ctx) {
         this.piece = null;
+        this.board = new Board(columns, rows, ctx);
+        this.piecesQueue = new Pieces(elements.nextPieces);
         this.gameOver = false;
         this.constrols = {
             ArrowDown: "moveDown",
@@ -18,18 +20,18 @@ class Tetris {
         this.lines = 0;
     }
 
-    createBoard(columns, rows, ctx) {
-        this.board = new Board(columns, rows);
-        this.board.ctx = ctx;
-    }
-
     newGame() {
         this.gameOver = false;
         this.score = 0;
         this.level = 1;
         this.lines = 0;
-        this.board.create();
-        this.randomPiece();
+        this.board.newBoard();
+        this.piecesQueue.clear();
+        this.piecesQueue.add();
+        this.piecesQueue.add();
+        this.piecesQueue.add();
+        this.nextPiece();
+        this.updateScreen();
     }
 
     updateScreen() {
@@ -37,26 +39,22 @@ class Tetris {
         this.elements.scoreBoard.textContent = this.score;
     }
 
-    randomPiece() {
-        const pieces = ["i", "o", "t", "j", "l", "s", "z"];
-        const pieceIndex = Math.floor(Math.random() * 7);
-        this.piece = new Piece(pieces[pieceIndex], this.board);
-        this.board.addPiece(this.piece);
-        this.updateScreen();
-    }
-
     isValidKeyPress(key) {
         return this.constrols.hasOwnProperty(key);
+    }
+
+    pieceCollided() {
+        return this.piece.collision;
+    }
+
+    nextPiece() {
+        this.piece = this.piecesQueue.next();
     }
 
     movePiece(code) {
         const functionName = this.constrols[code];
         this[functionName]();
         this.updateScreen();
-    }
-
-    pieceCollided() {
-        return this.piece.collision;
     }
 
     moveDown() {
@@ -104,20 +102,17 @@ class Tetris {
         const piece = this.piece;
 
         const nextRotationIndex =
-            piece.rotationIndex + 1 >= piece.rotations.length
-                ? 0
-                : piece.rotationIndex + 1;
+            (piece.rotationIndex + 1) % piece.rotations.length;
 
         const nextRotation = piece.rotations[nextRotationIndex];
 
         let kick = 0;
         if (this.board.collision(piece.x, piece.y, nextRotation)) {
-            kick = piece.x > this.columns / 2 ? -1 : 1;
+            kick = piece.x > this.board.columns / 2 ? -1 : 1;
         }
 
         if (this.board.collision(piece.x + kick, piece.y, nextRotation)) {
-            if (piece.code !== "i") return;
-            kick += piece.x > this.columns / 2 ? -1 : 1;
+            kick += piece.x > this.board.columns / 2 ? -1 : 1;
             if (this.board.collision(piece.x + kick, piece.y, nextRotation))
                 return;
         }
@@ -154,6 +149,8 @@ class Tetris {
         }
         const rowsRemoved = this.board.removeRows();
         this.score += rowsRemoved * 100 * this.level;
+
+        this.nextPiece();
         this.updateScreen();
     }
 }

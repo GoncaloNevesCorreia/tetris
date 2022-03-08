@@ -14,16 +14,21 @@ body {
     align-items: flex-start;
 }
 
-#board {
+#board,
+canvas {
     border: 1px solid black;
 }
 
 .side-container {
-    width: 200px;
+    width: 240px;
     border: 2px solid black;
     border-radius: 4px;
     margin: 0 50px;
     padding: 1rem;
+}
+
+.side-container > div {
+    margin-bottom: 20px;
 }
 
 .side-container .side-title {
