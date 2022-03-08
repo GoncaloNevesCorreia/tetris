@@ -50,12 +50,13 @@ class Tetris {
 
     nextPiece() {
         this.piece = this.piecesQueue.next();
+        this.piecesQueue.showNextPieces();
     }
 
     movePiece(code) {
         const functionName = this.constrols[code];
         this[functionName]();
-        this.updateScreen();
+        this.checkGameState();
     }
 
     moveDown() {
@@ -135,15 +136,18 @@ class Tetris {
     }
 
     checkGameState() {
-        if (this.piece.y < 0) {
-            this.gameOver = true;
-            return;
-        }
-        const rowsRemoved = this.board.removeRows();
-        this.score += rowsRemoved * 100 * this.level;
-        this.lines += rowsRemoved;
+        if (this.piece.collision) {
+            if (this.piece.y < 0) {
+                this.gameOver = true;
+                return;
+            }
 
-        this.nextPiece();
+            const rowsRemoved = this.board.removeRows();
+            this.score += rowsRemoved * 100 * this.level;
+            this.lines += rowsRemoved;
+
+            this.nextPiece();
+        }
         this.updateScreen();
     }
 }

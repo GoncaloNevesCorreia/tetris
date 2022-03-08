@@ -1,6 +1,10 @@
 body {
     margin: 0;
     font-family: Helvetica;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .title {

@@ -8,12 +8,13 @@ class Pieces extends Queue {
         super();
         this.nextPiecesSection = nextPiecesSection;
         this.codes = ["i", "o", "t", "j", "l", "s", "z"];
+        this.ctx = nextPiecesSection.getContext("2d");
+        this.square = new Square(this.ctx);
     }
 
     add() {
         const piece = this.randomPiece();
         this.enqueue(piece);
-        this.showNextPieces();
     }
 
     next() {
@@ -34,10 +35,7 @@ class Pieces extends Queue {
     }
 
     showNextPieces() {
-        const ctx = this.nextPiecesSection.getContext("2d");
-        const square = new Square(ctx);
-
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         let adjust = 0;
 
@@ -52,7 +50,7 @@ class Pieces extends Queue {
 
                     const yPos = yPositions[index] + adjust;
 
-                    square.draw(xPos + x, yPos + y, piece.code);
+                    this.square.draw(xPos + x, yPos + y, piece.code);
                 })
             );
         });

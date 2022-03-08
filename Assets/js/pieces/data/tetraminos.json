@@ -1,9 +1,12 @@
 {
   "0": {
-    "color": "white"
+    "color": "black"
+  },
+  "w": {
+    "image": "wall_block.png"
   },
   "i": {
-    "color": "cyan",
+    "image": "cyan_block.png",
     "rotations": [
       [
         [0, 0, 0, 0],
@@ -32,7 +35,7 @@
     ]
   },
   "o": {
-    "color": "yellow",
+    "image": "yellow_block.png",
     "rotations": [
       [
         [0, 1, 1, 0],
@@ -42,7 +45,7 @@
     ]
   },
   "t": {
-    "color": "pink",
+    "image": "pink_block.png",
     "rotations": [
       [
         [1, 1, 1],
@@ -67,7 +70,7 @@
     ]
   },
   "j": {
-    "color": "blue",
+    "image": "blue_block.png",
     "rotations": [
       [
         [1, 1, 1],
@@ -92,7 +95,7 @@
     ]
   },
   "l": {
-    "color": "orange",
+    "image": "light_blue_block.png",
     "rotations": [
       [
         [1, 1, 1],
@@ -117,7 +120,7 @@
     ]
   },
   "s": {
-    "color": "green",
+    "image": "green_block.png",
     "rotations": [
       [
         [0, 1, 1],
@@ -142,7 +145,7 @@
     ]
   },
   "z": {
-    "color": "red",
+    "image": "red_block.png",
     "rotations": [
       [
         [1, 1, 0],

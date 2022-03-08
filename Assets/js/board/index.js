@@ -15,12 +15,28 @@ class Board extends Square {
         for (let i = 0; i < this.rows; i++) {
             this.board.push(new Array(this.columns).fill(this.emptyCode));
         }
+
+        this.wallDraw();
     }
 
     render() {
         this.board.forEach((row, y) =>
-            row.forEach((value, x) => this.draw(x, y, value))
+            row.forEach(async (value, x) => await this.draw(x + 1, y, value))
         );
+    }
+
+    wallDraw() {
+        const wallCode = "w";
+        for (let row = 0; row < this.rows + 1; row++) {
+            if (row !== this.rows) {
+                this.draw(0, row, wallCode);
+                this.draw(this.columns + 1, row, wallCode);
+            } else {
+                for (let col = 0; col < this.columns + 2; col++) {
+                    this.draw(col, row, wallCode);
+                }
+            }
+        }
     }
 
     collision(futureX, futureY, rotation) {

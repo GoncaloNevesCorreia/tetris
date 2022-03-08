@@ -21,9 +21,6 @@ tetris.newGame();
 document.addEventListener("keydown", ({ code }) => {
     if (!tetris.isValidKeyPress(code)) return;
     tetris.movePiece(code);
-    if (!tetris.pieceCollided()) return;
-
-    tetris.checkGameState();
 
     if (!tetris.gameOver) return;
 
@@ -35,13 +32,13 @@ var lastAnimationTime = Date.now();
 function startAnimationFrames() {
     const now = Date.now();
     const delta = now - lastAnimationTime;
-    if (delta > 1000) {
+    if (delta > 900) {
         simulateArrowDown();
         lastAnimationTime = Date.now();
     }
     requestAnimationFrame(startAnimationFrames);
 }
-// startAnimationFrames();
+startAnimationFrames();
 
 function simulateArrowDown() {
     document.dispatchEvent(
