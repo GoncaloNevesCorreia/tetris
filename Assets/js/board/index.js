@@ -1,4 +1,4 @@
-import { Square } from "./square.js";
+import { Square } from "../Interface/square.js";
 
 class Board extends Square {
     constructor(rows, columns, ctx) {

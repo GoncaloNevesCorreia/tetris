@@ -1,7 +1,7 @@
 import tetraminosList from "./data/tetraminos.json" assert { type: "json" };
 import { Queue } from "./queue/index.js";
 import { Piece } from "./piece.js";
-import { Square } from "../board/square.js";
+import { Square } from "../Interface/square.js";
 
 class Pieces extends Queue {
     constructor(nextPiecesSection) {
