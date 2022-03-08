@@ -3,11 +3,13 @@ import { Tetris } from "./tetris.js";
 const canvas = document.querySelector("#board");
 const ctx = canvas.getContext("2d");
 const scoreBoard = document.querySelector("#score");
+const lines = document.querySelector("#lines");
 const nextPieces = document.querySelector("#nextPieces");
 
 const elements = {
     scoreBoard,
     nextPieces,
+    lines,
 };
 
 const rows = 20;

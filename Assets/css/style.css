@@ -36,7 +36,7 @@ canvas {
     font-weight: bold;
 }
 
-.side-container #score {
+.side-container .side-title + span {
     font-size: 1.2rem;
     font-weight: bold;
 }

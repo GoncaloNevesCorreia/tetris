@@ -37,6 +37,7 @@ class Tetris {
     updateScreen() {
         this.board.render();
         this.elements.scoreBoard.textContent = this.score;
+        this.elements.lines.textContent = this.lines;
     }
 
     isValidKeyPress(key) {
@@ -125,20 +126,11 @@ class Tetris {
     }
 
     hardDrop() {
-        const piece = this.piece;
+        this.moveDown();
 
-        if (this.board.collision(piece.x, piece.y + 1, piece.rotation)) {
-            piece.collision = true;
-            return;
-        }
+        if (this.piece.collision) return;
 
-        this.board.removePiece(piece);
-
-        piece.move(piece.x, piece.y + 1);
-
-        this.board.addPiece(piece);
-
-        this.score += 2;
+        this.score++;
         this.hardDrop();
     }
 
@@ -149,6 +141,7 @@ class Tetris {
         }
         const rowsRemoved = this.board.removeRows();
         this.score += rowsRemoved * 100 * this.level;
+        this.lines += rowsRemoved;
 
         this.nextPiece();
         this.updateScreen();
