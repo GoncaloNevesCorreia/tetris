@@ -5,6 +5,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: black;
 }
 
 .title {
@@ -37,11 +38,13 @@ canvas {
 .side-container .side-title {
     font-size: 1.5rem;
     font-weight: bold;
+    color: rgb(5, 161, 5);
 }
 
 .side-container .side-title + span {
     font-size: 1.2rem;
     font-weight: bold;
+    color: rgb(5, 161, 5);
 }
 
 #gameOver {

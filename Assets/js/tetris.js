@@ -1,11 +1,13 @@
 import { Board } from "./board/index.js";
 import { Pieces } from "./pieces/index.js";
+import { KeyboardHandler } from "./keyboardHandler/index.js";
 
 class Tetris {
     constructor(elements, columns, rows, ctx) {
         this.piece = null;
         this.board = new Board(columns, rows, ctx);
         this.piecesQueue = new Pieces(elements.nextPieces);
+        this.keyboardHandler = new KeyboardHandler();
         this.gameOver = false;
         this.elements = elements;
         this.score = 0;
@@ -16,48 +18,11 @@ class Tetris {
             gameOver: false,
             settings: false,
         };
-        this.constrols = {
-            ArrowDown: {
-                isPressed: false,
-                longPress: true,
-                needToPress: false,
-                times: 0,
-                funcName: "moveDown",
-            },
-            ArrowLeft: {
-                isPressed: false,
-                longPress: true,
-                needToPress: false,
-                times: 0,
-                funcName: "moveLeft",
-            },
-            ArrowRight: {
-                isPressed: false,
-                longPress: true,
-                needToPress: false,
-                times: 0,
-                funcName: "moveRight",
-            },
-            ArrowUp: {
-                isPressed: false,
-                longPress: false,
-                needToPress: false,
-                times: 0,
-                funcName: "rotatePiece",
-            },
-            Space: {
-                isPressed: false,
-                longPress: false,
-                needToPress: false,
-                funcName: "hardDrop",
-            },
-            Escape: {
-                isPressed: false,
-                longPress: false,
-                needToPress: false,
-                funcName: "newGame",
-            },
+        this.timestamps = {
+            gameLoop: 0,
+            dropTimer: 0,
         };
+        this.baseSpeed = 900;
     }
 
     newGame() {
@@ -78,6 +43,7 @@ class Tetris {
         this.board.render();
         this.elements.scoreBoard.textContent = this.score;
         this.elements.lines.textContent = this.lines;
+        this.elements.level.textContent = this.level;
     }
 
     pieceCollided() {
@@ -135,7 +101,7 @@ class Tetris {
         this.board.addPiece(piece);
     }
 
-    async rotatePiece() {
+    rotatePiece() {
         const piece = this.piece;
 
         const nextRotationIndex =
@@ -180,47 +146,13 @@ class Tetris {
             const rowsRemoved = this.board.removeRows();
             this.score += rowsRemoved * 100 * this.level;
             this.lines += rowsRemoved;
+            if (this.score - 1000 * this.level > 0) {
+                this.level++;
+                this.baseSpeed -= 50;
+            }
 
             this.nextPiece();
         }
-    }
-
-    keyDownHandler = ({ code }) => {
-        if (!this.isValidKeyPress(code)) return;
-        const key = this.constrols[code];
-        if (!key.isPressed) {
-            key.isPressed = true;
-            key.needToPress = true;
-        }
-    };
-
-    keyUpHandler = ({ code }) => {
-        if (!this.isValidKeyPress(code)) return;
-        this.constrols[code].isPressed = false;
-        this.constrols[code].times = 0;
-    };
-
-    isValidKeyPress(key) {
-        return this.constrols.hasOwnProperty(key);
-    }
-
-    executeMoves() {
-        Object.keys(this.constrols).forEach((code) => {
-            const key = this.constrols[code];
-
-            // Se nenhuma tecla está a ser premida e o comando já foi executado
-            // e não foi clicado momentáriamente numa tecla, não move
-            if (!key.isPressed && !key.needToPress) return;
-
-            // Se está a ser premida, mas a tecla não é de longPress e já foi executado, não move
-            if (key.isPressed && !key.longPress && key.times) return;
-
-            this.movePiece(key);
-
-            key.needToPress = false;
-
-            key.times += 1;
-        });
     }
 
     showGameOver(show = true) {
@@ -235,22 +167,48 @@ class Tetris {
         }
     }
 
-    animate = (now) => {
-        if (now - this.lastIntervalTimestamp >= 50) {
-            // Update the timestamp to right now
-            this.lastIntervalTimestamp = now;
+    executeCommands() {
+        const keys = this.keyboardHandler.getKeysToExecute();
 
-            this.executeMoves();
-            this.checkGameState();
+        for (const key of keys) {
+            this.movePiece(key);
+
+            key.needToPress = false;
+
+            key.times += 1;
+        }
+    }
+
+    startAnimations() {
+        requestAnimationFrame(this.gameLoop);
+        requestAnimationFrame(this.dropTimer);
+    }
+
+    gameLoop = (now) => {
+        if (now - this.timestamps.gameLoop >= 20) {
+            // Update the timestamp to right now
+            this.timestamps.gameLoop = now;
+
+            this.executeCommands();
 
             if (this.gameOver) {
                 // Mostra alguma coisa de gameOver
                 this.showGameOver();
+            } else {
+                this.checkGameState();
             }
         }
         this.updateScreen();
 
-        requestAnimationFrame(this.animate);
+        requestAnimationFrame(this.gameLoop);
+    };
+
+    dropTimer = (now) => {
+        if (now - this.timestamps.dropTimer >= this.baseSpeed) {
+            this.moveDown();
+            this.timestamps.dropTimer = now;
+        }
+        requestAnimationFrame(this.dropTimer);
     };
 }
 
