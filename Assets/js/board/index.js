@@ -21,7 +21,7 @@ class Board extends Square {
 
     render() {
         this.board.forEach((row, y) =>
-            row.forEach(async (value, x) => await this.draw(x + 1, y, value))
+            row.forEach((value, x) => this.draw(x + 1, y, value))
         );
     }
 

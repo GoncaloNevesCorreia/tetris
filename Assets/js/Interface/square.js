@@ -15,7 +15,7 @@ class Square {
         if (!piece.image) {
             this.ctx.fillStyle = piece.color;
             this.ctx.fillRect(positionX, positionY, this.size, this.size);
-            this.ctx.strokeStyle = "black";
+            this.ctx.strokeStyle = "#333333";
             this.ctx.strokeRect(positionX, positionY, this.size, this.size);
         } else {
             const image = await this.loadImage(piece.image);

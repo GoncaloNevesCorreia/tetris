@@ -25,7 +25,6 @@ canvas {
 
 .side-container {
     width: 240px;
-    border: 2px solid black;
     border-radius: 4px;
     margin: 0 50px;
     padding: 1rem;
@@ -43,4 +42,20 @@ canvas {
 .side-container .side-title + span {
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+#gameOver {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    display: none;
+}
+
+#gameOver.show {
+    display: block;
 }
