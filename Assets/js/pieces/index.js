@@ -9,7 +9,6 @@ class Pieces extends Queue {
         this.nextPiecesSection = nextPiecesSection;
         this.codes = ["i", "o", "t", "j", "l", "s", "z"];
         this.ctx = nextPiecesSection.getContext("2d");
-        this.square = new Square(this.ctx);
     }
 
     add() {
@@ -53,7 +52,9 @@ class Pieces extends Queue {
 
                     const yPos = yPositions[index] + adjust;
 
-                    this.square.draw(xPos + x, yPos + y, piece.code);
+                    const square = new Square(this.ctx, piece.code);
+
+                    square.draw(xPos + x, yPos + y);
                 })
             );
         });

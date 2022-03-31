@@ -1,39 +1,40 @@
 import { Square } from "../Interface/square.js";
 
-class Board extends Square {
+class Board {
     constructor(rows, columns, ctx) {
-        super(ctx);
         this.rows = rows;
         this.columns = columns;
         this.board = [];
-        this.emptyCode = 0;
         this.piecePositions = [];
+        this.ctx = ctx;
+        this.emptyCode = 0;
     }
 
     newBoard() {
         this.board = [];
         for (let i = 0; i < this.rows; i++) {
-            this.board.push(new Array(this.columns).fill(this.emptyCode));
+            this.board.push(this.createRow());
         }
-
-        this.wallDraw();
     }
 
     render() {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.board.forEach((row, y) =>
-            row.forEach((value, x) => this.draw(x + 1, y, value))
+            row.forEach((square, x) => square.draw(x + 1, y))
         );
+        this.wallDraw();
     }
 
     wallDraw() {
         const wallCode = "w";
+        const wallPiece = new Square(this.ctx, wallCode);
         for (let row = 0; row < this.rows + 1; row++) {
             if (row !== this.rows) {
-                this.draw(0, row, wallCode);
-                this.draw(this.columns + 1, row, wallCode);
+                wallPiece.draw(0, row, wallCode);
+                wallPiece.draw(this.columns + 1, row, wallCode);
             } else {
                 for (let col = 0; col < this.columns + 2; col++) {
-                    this.draw(col, row, wallCode);
+                    wallPiece.draw(col, row, wallCode);
                 }
             }
         }
@@ -51,7 +52,7 @@ class Board extends Square {
 
                 if (newY < 0) continue;
                 if (this.piecePositions.includes(`${newX}${newY}`)) continue;
-                if (this.board[newY][newX] != this.emptyCode) return true;
+                if (this.board[newY][newX].code != this.emptyCode) return true;
             }
         }
 
@@ -78,7 +79,7 @@ class Board extends Square {
 
                     if (positionY < 0) return;
 
-                    this.board[positionY][positionX] = this.emptyCode;
+                    this.board[positionY][positionX].code = this.emptyCode;
                 }
             })
         );
@@ -95,7 +96,7 @@ class Board extends Square {
 
                     if (positionY < 0) return;
 
-                    this.board[positionY][positionX] = piece.code;
+                    this.board[positionY][positionX].code = piece.code;
                 }
             })
         );
@@ -106,16 +107,24 @@ class Board extends Square {
     removeRows() {
         let rowsRemoved = 0;
         this.board.forEach((row, index) => {
-            if (row.includes(this.emptyCode)) return;
+            if (row.find((square) => square.code === this.emptyCode)) return;
 
             this.board.splice(index, 1);
 
-            const newRow = new Array(this.columns).fill(this.emptyCode);
+            const newRow = this.createRow();
             this.board.unshift(newRow);
             rowsRemoved++;
         });
 
         return rowsRemoved;
+    }
+
+    createRow() {
+        let row = [];
+        for (let i = 0; i < this.columns; i++) {
+            row.push(new Square(this.ctx, this.emptyCode));
+        }
+        return row;
     }
 }
 
