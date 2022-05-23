@@ -4,6 +4,7 @@ import { KeyboardHandler } from "./keyboardHandler/index.js";
 
 class Tetris {
     constructor(elements, columns, rows, ctx) {
+        this.ctx = ctx;
         this.piece = null;
         this.board = new Board(columns, rows, ctx);
         this.piecesQueue = new Pieces(elements.nextPieces);
@@ -198,6 +199,9 @@ class Tetris {
                 this.checkGameState();
             }
         }
+
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
         this.updateScreen();
 
         requestAnimationFrame(this.gameLoop);

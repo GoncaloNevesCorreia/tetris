@@ -18,7 +18,6 @@ class Board {
     }
 
     render() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.board.forEach((row, y) =>
             row.forEach((square, x) => square.draw(x + 1, y))
         );
@@ -30,11 +29,11 @@ class Board {
         const wallPiece = new Square(this.ctx, wallCode);
         for (let row = 0; row < this.rows + 1; row++) {
             if (row !== this.rows) {
-                wallPiece.draw(0, row, wallCode);
-                wallPiece.draw(this.columns + 1, row, wallCode);
+                wallPiece.draw(0, row);
+                wallPiece.draw(this.columns + 1, row);
             } else {
                 for (let col = 0; col < this.columns + 2; col++) {
-                    wallPiece.draw(col, row, wallCode);
+                    wallPiece.draw(col, row);
                 }
             }
         }
@@ -113,6 +112,7 @@ class Board {
 
             const newRow = this.createRow();
             this.board.unshift(newRow);
+
             rowsRemoved++;
         });
 

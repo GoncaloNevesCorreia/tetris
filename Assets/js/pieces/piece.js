@@ -2,7 +2,6 @@ class Piece {
     constructor(code, tetramino) {
         this.color = tetramino.color;
         this.rotations = tetramino.rotations;
-        this.display = tetramino.display;
         this.rotationIndex = 0;
         this.rotation = this.rotations[this.rotationIndex];
         this.code = code;
