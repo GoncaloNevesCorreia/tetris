@@ -38,7 +38,7 @@ class Square {
         }
 
         return new Promise((resolve, reject) => {
-            const imageDir = "/Assets/images/";
+            const imageDir = "./Assets/images/";
             const base_image = new Image();
             base_image.src = `${imageDir}${name}`;
             base_image.onload = () => {
