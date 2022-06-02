@@ -8,22 +8,22 @@ class Tetris {
         this.piece = null;
         this.board = new Board(columns, rows, ctx);
         this.piecesQueue = new Pieces(elements.nextPieces);
-        this.keyboardHandler = new KeyboardHandler();
-        this.gameOver = false;
+        this.keyboardHandler = new KeyboardHandler(this);
         this.elements = elements;
         this.score = 0;
         this.level = 1;
         this.lines = 0;
         this.lastIntervalTimestamp = 0;
-        this.menu = {
-            gameOver: false,
-            settings: false,
-        };
+
         this.timestamps = {
             gameLoop: 0,
             dropTimer: 0,
         };
+
         this.baseSpeed = 900;
+        this.gameOver = false;
+        this.isPaused = false;
+        this.startAnimations();
     }
 
     newGame() {
@@ -31,7 +31,6 @@ class Tetris {
         this.score = 0;
         this.level = 1;
         this.lines = 0;
-        this.showGameOver(false);
         this.board.newBoard();
         this.piecesQueue.clear();
         this.piecesQueue.add();
@@ -56,12 +55,7 @@ class Tetris {
         this.piecesQueue.showNextPieces();
     }
 
-    movePiece(key) {
-        const functionName = key.funcName;
-        this[functionName]();
-    }
-
-    moveDown() {
+    moveDown = () => {
         const piece = this.piece;
 
         if (this.board.collision(piece.x, piece.y + 1, piece.rotation)) {
@@ -76,9 +70,9 @@ class Tetris {
         this.board.addPiece(piece);
 
         this.score++;
-    }
+    };
 
-    moveLeft() {
+    moveLeft = () => {
         const piece = this.piece;
 
         if (this.board.collision(piece.x - 1, piece.y, piece.rotation)) return;
@@ -88,9 +82,9 @@ class Tetris {
         piece.move(piece.x - 1, piece.y);
 
         this.board.addPiece(piece);
-    }
+    };
 
-    moveRight() {
+    moveRight = () => {
         const piece = this.piece;
 
         if (this.board.collision(piece.x + 1, piece.y, piece.rotation)) return;
@@ -100,9 +94,9 @@ class Tetris {
         piece.move(piece.x + 1, piece.y);
 
         this.board.addPiece(piece);
-    }
+    };
 
-    rotatePiece() {
+    rotatePiece = () => {
         const piece = this.piece;
 
         const nextRotationIndex =
@@ -126,16 +120,16 @@ class Tetris {
         piece.rotate(nextRotationIndex, kick);
 
         this.board.addPiece(piece);
-    }
+    };
 
-    hardDrop() {
+    hardDrop = () => {
         this.moveDown();
 
         if (this.piece.collision) return;
 
         this.score++;
         this.hardDrop();
-    }
+    };
 
     checkGameState() {
         if (this.piece.collision) {
@@ -156,23 +150,13 @@ class Tetris {
         }
     }
 
-    showGameOver(show = true) {
-        if (show) {
-            if (this.menu.gameOver) return;
-            this.menu.gameOver = true;
-            this.elements.gameOverScreen.classList.add("show");
-        } else {
-            if (!this.menu.gameOver) return;
-            this.menu.gameOver = false;
-            this.elements.gameOverScreen.classList.remove("show");
-        }
-    }
-
     executeCommands() {
         const keys = this.keyboardHandler.getKeysToExecute();
 
         for (const key of keys) {
-            this.movePiece(key);
+            // this.movePiece(key);
+
+            key.exec();
 
             key.needToPress = false;
 
@@ -189,13 +173,8 @@ class Tetris {
         if (now - this.timestamps.gameLoop >= 20) {
             // Update the timestamp to right now
             this.timestamps.gameLoop = now;
-
-            this.executeCommands();
-
-            if (this.gameOver) {
-                // Mostra alguma coisa de gameOver
-                this.showGameOver();
-            } else {
+            if (!this.isPaused) {
+                this.executeCommands();
                 this.checkGameState();
             }
         }
@@ -204,15 +183,15 @@ class Tetris {
 
         this.updateScreen();
 
-        requestAnimationFrame(this.gameLoop);
+        if (!this.gameOver) requestAnimationFrame(this.gameLoop);
     };
 
     dropTimer = (now) => {
         if (now - this.timestamps.dropTimer >= this.baseSpeed) {
-            this.moveDown();
+            if (!this.isPaused) this.moveDown();
             this.timestamps.dropTimer = now;
         }
-        requestAnimationFrame(this.dropTimer);
+        if (!this.gameOver) requestAnimationFrame(this.dropTimer);
     };
 }
 

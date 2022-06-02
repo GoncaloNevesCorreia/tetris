@@ -1,5 +1,7 @@
 class KeyboardHandler {
-    constructor() {
+    constructor(tetris) {
+        this.tetris = tetris;
+
         this.constrols = {
             ArrowDown: {
                 isPressed: false,
@@ -7,7 +9,7 @@ class KeyboardHandler {
                 needToPress: false,
                 times: 0,
                 timestamp: 0,
-                funcName: "moveDown",
+                exec: this.tetris.moveDown,
             },
             ArrowLeft: {
                 isPressed: false,
@@ -15,7 +17,7 @@ class KeyboardHandler {
                 needToPress: false,
                 times: 0,
                 timestamp: 0,
-                funcName: "moveLeft",
+                exec: this.tetris.moveLeft,
             },
             ArrowRight: {
                 isPressed: false,
@@ -23,7 +25,7 @@ class KeyboardHandler {
                 needToPress: false,
                 times: 0,
                 timestamp: 0,
-                funcName: "moveRight",
+                exec: this.tetris.moveRight,
             },
             ArrowUp: {
                 isPressed: false,
@@ -31,7 +33,7 @@ class KeyboardHandler {
                 needToPress: false,
                 times: 0,
                 timestamp: 0,
-                funcName: "rotatePiece",
+                exec: this.tetris.rotatePiece,
             },
             Space: {
                 isPressed: false,
@@ -39,18 +41,16 @@ class KeyboardHandler {
                 needToPress: false,
                 times: 0,
                 timestamp: 0,
-                funcName: "hardDrop",
-            },
-            Escape: {
-                isPressed: false,
-                longPress: false,
-                needToPress: false,
-                funcName: "newGame",
+                exec: this.tetris.hardDrop,
             },
         };
+
+        document.addEventListener("keydown", this.keyDown);
+        document.addEventListener("keyup", this.keyUp);
     }
 
     keyDown = ({ code }) => {
+        if (this.tetris.isPaused) return;
         if (!this.isValidKeyPress(code)) return;
         const key = this.constrols[code];
         if (!key.isPressed) {
@@ -60,6 +60,7 @@ class KeyboardHandler {
     };
 
     keyUp = ({ code }) => {
+        if (this.tetris.isPaused) return;
         if (!this.isValidKeyPress(code)) return;
         this.constrols[code].isPressed = false;
         this.constrols[code].times = 0;

@@ -21,8 +21,13 @@ const rows = 20;
 const columns = 10;
 
 const tetris = new Tetris(elements, rows, columns, ctx);
-tetris.newGame();
-tetris.startAnimations();
 
-document.addEventListener("keydown", tetris.keyboardHandler.keyDown);
-document.addEventListener("keyup", tetris.keyboardHandler.keyUp);
+document.addEventListener("keydown", ({ code }) => {
+    switch (code) {
+        case "Escape":
+            tetris.isPaused = !tetris.isPaused;
+            break;
+    }
+});
+
+tetris.newGame();
