@@ -10,10 +10,24 @@
     </head>
 
     <body>
-        <section id="game">
-            <div id="gameOver">
+        <section id="mainMenu">
+            <div>
+                <button class="newGameBtn">New Game</button>
+            </div>
+        </section>
+
+        <section id="game" class="hide">
+            <div id="gameOver" class="hide">
                 <h1>Game Over</h1>
-                <p>Press ESC to restart...</p>
+                <button class="newGameBtn">Novo Jogo</button>
+                <button class="exitGameBtn">Sair</button>
+            </div>
+
+            <div id="gamePause" class="hide">
+                <h1>Paused</h1>
+                <button class="resumeGameBtn">Continuar</button>
+                <button class="newGameBtn">Novo Jogo</button>
+                <button class="exitGameBtn">Sair</button>
             </div>
 
             <div class="side-container">

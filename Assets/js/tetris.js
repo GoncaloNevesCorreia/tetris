@@ -2,8 +2,9 @@ import { Board } from "./board/index.js";
 import { Pieces } from "./pieces/index.js";
 import { KeyboardHandler } from "./keyboardHandler/index.js";
 
-class Tetris {
+class Tetris extends EventTarget {
     constructor(elements, columns, rows, ctx) {
+        super();
         this.ctx = ctx;
         this.piece = null;
         this.board = new Board(columns, rows, ctx);
@@ -23,14 +24,23 @@ class Tetris {
         this.baseSpeed = 900;
         this.gameOver = false;
         this.isPaused = false;
-        this.startAnimations();
+
+        this.animationLoops = {
+            drop: null,
+            movement: null,
+        };
+
+        this.gameOverEvent = new Event("gameover");
     }
 
     newGame() {
+        this.keyboardHandler = new KeyboardHandler(this);
+        this.startAnimations();
         this.gameOver = false;
         this.score = 0;
         this.level = 1;
         this.lines = 0;
+        this.baseSpeed = 900;
         this.board.newBoard();
         this.piecesQueue.clear();
         this.piecesQueue.add();
@@ -134,7 +144,8 @@ class Tetris {
     checkGameState() {
         if (this.piece.collision) {
             if (this.piece.y < 0) {
-                this.gameOver = true;
+                this.endGame();
+                this.dispatchEvent(this.gameOverEvent);
                 return;
             }
 
@@ -164,12 +175,26 @@ class Tetris {
         }
     }
 
+    endGame() {
+        this.gameOver = true;
+        this.stopAnimations();
+    }
+
     startAnimations() {
         requestAnimationFrame(this.gameLoop);
         requestAnimationFrame(this.dropTimer);
     }
 
+    stopAnimations() {
+        cancelAnimationFrame(this.animationLoops.movement);
+        cancelAnimationFrame(this.animationLoops.drop);
+    }
+
     gameLoop = (now) => {
+        if (!this.gameOver) {
+            this.animationLoops.movement = requestAnimationFrame(this.gameLoop);
+        }
+
         if (now - this.timestamps.gameLoop >= 20) {
             // Update the timestamp to right now
             this.timestamps.gameLoop = now;
@@ -182,16 +207,17 @@ class Tetris {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         this.updateScreen();
-
-        if (!this.gameOver) requestAnimationFrame(this.gameLoop);
     };
 
     dropTimer = (now) => {
+        if (!this.gameOver) {
+            this.animationLoops.drop = requestAnimationFrame(this.dropTimer);
+        }
+
         if (now - this.timestamps.dropTimer >= this.baseSpeed) {
             if (!this.isPaused) this.moveDown();
             this.timestamps.dropTimer = now;
         }
-        if (!this.gameOver) requestAnimationFrame(this.dropTimer);
     };
 }
 
