@@ -4,6 +4,7 @@ const canvas = document.querySelector("#board");
 const ctx = canvas.getContext("2d");
 
 const scoreBoard = document.querySelector("#score");
+const highscoreElement = document.querySelector("#highscore");
 const lines = document.querySelector("#lines");
 const level = document.querySelector("#level");
 const nextPieces = document.querySelector("#nextPieces");
@@ -65,6 +66,16 @@ const sections = {
 
 tetris.addEventListener("gameover", () => {
     sections.gameOver.section.classList.remove("hide");
+
+    const highscore = localStorage.getItem("highscore");
+
+    if (highscore === null) {
+        localStorage.setItem("highscore", tetris.score);
+        highscoreElement.textContent = tetris.score;
+    } else if (parseInt(highscore) < tetris.score) {
+        localStorage.setItem("highscore", tetris.score);
+        highscoreElement.textContent = tetris.score;
+    }
 });
 
 sections.gameOver.buttons.newGame.addEventListener("click", () => {
@@ -84,6 +95,14 @@ sections.mainMenu.buttons.newGame.addEventListener("click", () => {
     sections.game.section.classList.remove("hide");
 
     tetris.newGame();
+
+    const highscore = localStorage.getItem("highscore");
+
+    if (highscore !== null) {
+        highscoreElement.textContent = highscore;
+    } else {
+        highscoreElement.textContent = 0;
+    }
 });
 
 sections.pause.buttons.newGame.addEventListener("click", () => {
