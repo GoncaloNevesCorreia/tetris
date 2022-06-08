@@ -35,9 +35,6 @@ class Pieces extends Queue {
 
     showNextPieces() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.ctx.rect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.ctx.fillStyle = "black";
-        this.ctx.fill();
 
         let adjust = 0;
 

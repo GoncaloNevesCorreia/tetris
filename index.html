@@ -7,43 +7,96 @@
         <title>Tetris Game</title>
         <link rel="stylesheet" href="Assets/css/style.css" />
         <script type="module" src="Assets/js/index.js" defer></script>
+
+        <!-- GOOGLE FONTS -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap"
+            rel="stylesheet"
+        />
+        <!-- GOOGLE FONTS -->
+
+        <!-- FONT AWESOME -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+            integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <!-- FONT AWESOME -->
     </head>
 
     <body>
-        <section id="mainMenu">
+        <section id="mainMenu" class="menu-container">
             <div>
-                <button class="newGameBtn">New Game</button>
+                <img src="Assets/images/layout/logo.png" alt="logo" />
             </div>
+
+            <button class="newGameBtn">New Game</button>
         </section>
 
         <section id="game" class="hide">
-            <div id="gameOver" class="hide">
-                <h1>Game Over</h1>
-                <button class="newGameBtn">Novo Jogo</button>
-                <button class="exitGameBtn">Sair</button>
+            <div id="gameOver" class="hide overlay">
+                <div class="menu-container">
+                    <h1>Game Over</h1>
+                    <button class="newGameBtn">Novo Jogo</button>
+                    <button class="exitGameBtn">Sair</button>
+                </div>
+            </div>
+            <div id="gamePause" class="hide overlay">
+                <div class="menu-container">
+                    <button class="resumeGameBtn">Continuar</button>
+                    <button class="newGameBtn">Novo Jogo</button>
+                    <button class="exitGameBtn">Sair</button>
+                </div>
             </div>
 
-            <div id="gamePause" class="hide">
-                <h1>Paused</h1>
-                <button class="resumeGameBtn">Continuar</button>
-                <button class="newGameBtn">Novo Jogo</button>
-                <button class="exitGameBtn">Sair</button>
+            <div id="score-section">
+                <div class="menu-container">
+                    <div>
+                        <span class="side-title">Score: </span>
+                        <span id="score"></span>
+                    </div>
+                </div>
+
+                <div class="menu-container">
+                    <div>
+                        <span class="side-title">Lines: </span>
+                        <span id="lines"></span>
+                    </div>
+                </div>
+
+                <div class="menu-container">
+                    <div>
+                        <span class="side-title">Level: </span>
+                        <span id="level"></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="side-container">
-                <span class="side-title">Score: </span>
-                <span id="score"></span>
-                <br />
-                <span class="side-title">Lines: </span>
-                <span id="lines"></span>
-                <br />
-                <span class="side-title">Level: </span>
-                <span id="level"></span>
-            </div>
-            <canvas id="board" width="480" height="840"></canvas>
-            <div class="side-container">
-                <span class="side-title">Next: </span>
-                <canvas id="nextPieces" width="240" height="520"></canvas>
+            <div id="game-section">
+                <div class="menu-container">
+                    <span
+                        class="side-title small-title text-center margin-highscore"
+                    >
+                        HIGHSCORE
+                    </span>
+                    <div>
+                        <i class="fa-solid fa-trophy cup"></i>
+                        <span id="topScore">0</span>
+                    </div>
+                </div>
+                <div class="menu-container">
+                    <canvas id="board" width="300" height="600"></canvas>
+                </div>
+                <div class="menu-container">
+                    <span class="side-title small-title text-center"
+                        >Próximas</span
+                    >
+                    <canvas id="nextPieces" width="180" height="390"></canvas>
+                </div>
             </div>
         </section>
     </body>

@@ -17,8 +17,22 @@ const elements = {
     gameOverScreen,
 };
 
+const squareSize = 35;
+
 const rows = 20;
 const columns = 10;
+
+canvas.width = columns * squareSize;
+canvas.height = rows * squareSize;
+
+canvas.style.width = canvas.width;
+canvas.style.height = canvas.height;
+
+nextPieces.width = 6 * squareSize;
+nextPieces.height = 13 * squareSize;
+
+nextPieces.style.width = nextPieces.width;
+nextPieces.style.height = nextPieces.height;
 
 const tetris = new Tetris(elements, rows, columns, ctx);
 

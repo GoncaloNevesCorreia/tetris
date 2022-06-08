@@ -19,24 +19,8 @@ class Board {
 
     render() {
         this.board.forEach((row, y) =>
-            row.forEach((square, x) => square.draw(x + 1, y))
+            row.forEach((square, x) => square.draw(x, y))
         );
-        this.wallDraw();
-    }
-
-    wallDraw() {
-        const wallCode = "w";
-        const wallPiece = new Square(this.ctx, wallCode);
-        for (let row = 0; row < this.rows + 1; row++) {
-            if (row !== this.rows) {
-                wallPiece.draw(0, row);
-                wallPiece.draw(this.columns + 1, row);
-            } else {
-                for (let col = 0; col < this.columns + 2; col++) {
-                    wallPiece.draw(col, row);
-                }
-            }
-        }
     }
 
     collision(futureX, futureY, rotation) {

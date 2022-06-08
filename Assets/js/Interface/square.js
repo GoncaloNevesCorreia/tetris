@@ -4,7 +4,7 @@ class Square {
     static images = [];
 
     constructor(ctx, code) {
-        this.size = 40;
+        this.size = 35;
         this.ctx = ctx;
         this.code = code;
     }
@@ -14,22 +14,11 @@ class Square {
         const positionY = y * this.size;
         const piece = tetraminosList[this.code];
 
-        if (!piece.image) {
-            this.ctx.fillStyle = piece.color;
-            this.ctx.fillRect(positionX, positionY, this.size, this.size);
-            this.ctx.strokeStyle = "#333333";
-            this.ctx.strokeRect(positionX, positionY, this.size, this.size);
-        } else {
-            const image = await this.loadImage(piece.image);
+        if (!piece.image) return;
 
-            this.ctx.drawImage(
-                image,
-                positionX,
-                positionY,
-                this.size,
-                this.size
-            );
-        }
+        const image = await this.loadImage(piece.image);
+
+        this.ctx.drawImage(image, positionX, positionY, this.size, this.size);
     }
 
     loadImage(name) {
@@ -38,7 +27,7 @@ class Square {
         }
 
         return new Promise((resolve, reject) => {
-            const imageDir = "./Assets/images/";
+            const imageDir = "./Assets/images/blocks/";
             const base_image = new Image();
             base_image.src = `${imageDir}${name}`;
             base_image.onload = () => {
