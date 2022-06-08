@@ -135,7 +135,7 @@ function togglePause() {
     sections.pause.section.classList.toggle("hide");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
     const loader = document.querySelector("#loader");
     loader.classList.add("fade-out");
 
