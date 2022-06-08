@@ -134,3 +134,16 @@ function togglePause() {
     tetris.isPaused = !tetris.isPaused;
     sections.pause.section.classList.toggle("hide");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.querySelector("#loader");
+    loader.classList.add("fade-out");
+
+    setTimeout(() => {
+        loader.querySelector("div").classList.add("hide");
+    }, 500);
+
+    setTimeout(() => {
+        loader.classList.add("hide");
+    }, 2000);
+});
