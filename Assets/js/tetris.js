@@ -34,6 +34,7 @@ class Tetris extends EventTarget {
 
         this.sounds = {
             music: new Audio("Assets/sounds/main_theme.mp3"),
+            isMuted: false,
         };
     }
 

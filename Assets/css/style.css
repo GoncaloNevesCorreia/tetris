@@ -265,7 +265,8 @@ body {
 }
 
 
-#pause_btn {
+#pause_btn,
+.mute_sound_btn {
 
     position: fixed !important;
     min-width: auto !important;
@@ -283,6 +284,14 @@ body {
     cursor: pointer;
 }
 
-#pause_btn:hover {
+#pause_btn:hover,
+.mute_sound_btn:hover {
     background: rgba(162, 36, 160, 0.6);
+}
+
+.mute_sound_btn {
+    bottom: unset;
+    right: 20px;
+    top: 60px;
+    padding: 1rem !important;
 }

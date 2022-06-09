@@ -56,6 +56,7 @@ const sections = {
             resume: document.querySelector("#gamePause .resumeGameBtn"),
             newGame: document.querySelector("#gamePause .newGameBtn"),
             exit: document.querySelector("#gamePause .exitGameBtn"),
+            mute: document.querySelector("#gamePause .mute_sound_btn")
         },
     },
     gameOver: {
@@ -63,6 +64,7 @@ const sections = {
         buttons: {
             newGame: document.querySelector("#gameOver .newGameBtn"),
             exit: document.querySelector("#gameOver .exitGameBtn"),
+            mute: document.querySelector("#gameOver .mute_sound_btn")
         },
     },
 };
@@ -124,6 +126,9 @@ sections.pause.buttons.exit.addEventListener("click", () => {
     tetris.stopMusic();
 });
 
+sections.pause.buttons.mute.addEventListener("click", toggleMute)
+sections.gameOver.buttons.mute.addEventListener("click", toggleMute)
+
 sections.game.buttons.pause.addEventListener("click", () => {
     if (tetris.gameOver) return;
     togglePause();
@@ -138,6 +143,42 @@ document.addEventListener("keydown", ({ code }) => {
             break;
     }
 });
+
+function toggleMute() {
+    if (tetris.sounds.isMuted) {
+
+        tetris.sounds.isMuted = false;
+        tetris.playMusic();
+        const iconMuted = document.querySelectorAll(".fa-volume-xmark");
+        const iconUnMuted = document.querySelectorAll(".fa-volume-high");
+
+        iconUnMuted.forEach((icon) => {
+            icon.classList.remove("hide");
+        })
+
+        iconMuted.forEach((icon) => {
+            icon.classList.add("hide");
+        })
+
+    } else {
+
+        tetris.sounds.isMuted = true;
+        tetris.stopMusic();
+        const iconMuted = document.querySelectorAll(".fa-volume-xmark");
+        const iconUnMuted = document.querySelectorAll(".fa-volume-high");
+
+        iconUnMuted.forEach((icon) => {
+            icon.classList.add("hide");
+        })
+
+        iconMuted.forEach((icon) => {
+            icon.classList.remove("hide");
+        })
+
+    }
+
+
+}
 
 function togglePause() {
     tetris.isPaused = !tetris.isPaused;
