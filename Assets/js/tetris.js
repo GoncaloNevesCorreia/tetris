@@ -35,6 +35,10 @@ class Tetris extends EventTarget {
         this.sounds = {
             music: new Audio("Assets/sounds/main_theme.mp3"),
             isMuted: false,
+            volume: {
+                high: 0.15,
+                low: 0.05
+            }
         };
     }
 
@@ -198,8 +202,9 @@ class Tetris extends EventTarget {
 
     playMusic() {
 
+        if (this.sounds.isMuted) return
         this.sounds.music.currentTime = 0;
-        this.sounds.music.volume = 0.15;
+        this.sounds.music.volume = this.sounds.volume.high;
         this.sounds.music.play();
     }
 

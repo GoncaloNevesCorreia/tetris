@@ -72,6 +72,8 @@ const sections = {
 tetris.addEventListener("gameover", () => {
     sections.gameOver.section.classList.remove("hide");
 
+    tetris.sounds.music.volume = tetris.sounds.volume.low;
+
     const highscore = localStorage.getItem("highscore");
 
     if (highscore === null) {
@@ -184,9 +186,9 @@ function togglePause() {
     tetris.isPaused = !tetris.isPaused;
     sections.pause.section.classList.toggle("hide");
     if (tetris.isPaused) {
-        tetris.sounds.music.volume = 0.05;
+        tetris.sounds.music.volume = tetris.sounds.volume.low;
     } else {
-        tetris.sounds.music.volume = 0.15;
+        tetris.sounds.music.volume = tetris.sounds.volume.high;
     }
 }
 
