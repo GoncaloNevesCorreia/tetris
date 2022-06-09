@@ -121,6 +121,7 @@ sections.pause.buttons.exit.addEventListener("click", () => {
     tetris.endGame();
     sections.game.section.classList.add("hide");
     sections.mainMenu.section.classList.remove("hide");
+    tetris.stopMusic();
 });
 
 sections.game.buttons.pause.addEventListener("click", () => {
@@ -141,6 +142,11 @@ document.addEventListener("keydown", ({ code }) => {
 function togglePause() {
     tetris.isPaused = !tetris.isPaused;
     sections.pause.section.classList.toggle("hide");
+    if (tetris.isPaused) {
+        tetris.sounds.music.volume = 0.05;
+    } else {
+        tetris.sounds.music.volume = 0.15;
+    }
 }
 
 window.addEventListener("load", () => {

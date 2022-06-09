@@ -31,6 +31,10 @@ class Tetris extends EventTarget {
         };
 
         this.gameOverEvent = new Event("gameover");
+
+        this.sounds = {
+            music: new Audio("Assets/sounds/main_theme.mp3"),
+        };
     }
 
     newGame() {
@@ -47,6 +51,7 @@ class Tetris extends EventTarget {
         this.piecesQueue.add();
         this.piecesQueue.add();
         this.nextPiece();
+        this.playMusic();
     }
 
     updateScreen() {
@@ -188,6 +193,18 @@ class Tetris extends EventTarget {
     stopAnimations() {
         cancelAnimationFrame(this.animationLoops.movement);
         cancelAnimationFrame(this.animationLoops.drop);
+    }
+
+    playMusic() {
+
+        this.sounds.music.currentTime = 0;
+        this.sounds.music.volume = 0.15;
+        this.sounds.music.play();
+    }
+
+    stopMusic() {
+        this.sounds.music.pause();
+        this.sounds.music.currentTime = 0;
     }
 
     gameLoop = (now) => {
