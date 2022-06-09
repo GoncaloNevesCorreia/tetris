@@ -24,8 +24,8 @@ resizeCanvas(canvas, 10, 20, squareSize);
 resizeCanvas(nextPieces, 6, 13, squareSize);
 
 function resizeCanvas(canvasToResize, cols, rows, size) {
-    canvasToResize.width = cols * squareSize;
-    canvasToResize.height = rows * squareSize;
+    canvasToResize.width = cols * size;
+    canvasToResize.height = rows * size;
 
     canvasToResize.style.width = canvasToResize.width;
     canvasToResize.style.height = canvasToResize.height;
@@ -52,7 +52,7 @@ const sections = {
             resume: document.querySelector("#gamePause .resumeGameBtn"),
             newGame: document.querySelector("#gamePause .newGameBtn"),
             exit: document.querySelector("#gamePause .exitGameBtn"),
-            mute: document.querySelector("#gamePause .mute_sound_btn")
+            mute: document.querySelector("#gamePause .mute_sound_btn"),
         },
     },
     gameOver: {
@@ -60,7 +60,7 @@ const sections = {
         buttons: {
             newGame: document.querySelector("#gameOver .newGameBtn"),
             exit: document.querySelector("#gameOver .exitGameBtn"),
-            mute: document.querySelector("#gameOver .mute_sound_btn")
+            mute: document.querySelector("#gameOver .mute_sound_btn"),
         },
     },
 };
@@ -124,8 +124,8 @@ sections.pause.buttons.exit.addEventListener("click", () => {
     tetris.stopMusic();
 });
 
-sections.pause.buttons.mute.addEventListener("click", toggleMute)
-sections.gameOver.buttons.mute.addEventListener("click", toggleMute)
+sections.pause.buttons.mute.addEventListener("click", toggleMute);
+sections.gameOver.buttons.mute.addEventListener("click", toggleMute);
 
 sections.game.buttons.pause.addEventListener("click", () => {
     if (tetris.gameOver) return;
@@ -144,7 +144,6 @@ document.addEventListener("keydown", ({ code }) => {
 
 function toggleMute() {
     if (tetris.sounds.isMuted) {
-
         tetris.sounds.isMuted = false;
         tetris.playMusic();
         const iconMuted = document.querySelectorAll(".fa-volume-xmark");
@@ -152,14 +151,12 @@ function toggleMute() {
 
         iconUnMuted.forEach((icon) => {
             icon.classList.remove("hide");
-        })
+        });
 
         iconMuted.forEach((icon) => {
             icon.classList.add("hide");
-        })
-
+        });
     } else {
-
         tetris.sounds.isMuted = true;
         tetris.stopMusic();
         const iconMuted = document.querySelectorAll(".fa-volume-xmark");
@@ -167,15 +164,12 @@ function toggleMute() {
 
         iconUnMuted.forEach((icon) => {
             icon.classList.add("hide");
-        })
+        });
 
         iconMuted.forEach((icon) => {
             icon.classList.remove("hide");
-        })
-
+        });
     }
-
-
 }
 
 function togglePause() {
