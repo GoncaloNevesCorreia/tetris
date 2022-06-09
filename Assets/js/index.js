@@ -46,6 +46,9 @@ const sections = {
     },
     game: {
         section: document.querySelector("#game"),
+        buttons: {
+            pause: document.querySelector("#pause_btn")
+        }
     },
     pause: {
         section: document.querySelector("#gamePause"),
@@ -119,6 +122,11 @@ sections.pause.buttons.exit.addEventListener("click", () => {
     sections.game.section.classList.add("hide");
     sections.mainMenu.section.classList.remove("hide");
 });
+
+sections.game.buttons.pause.addEventListener("click", () => {
+    if (tetris.gameOver) return;
+    togglePause();
+})
 
 document.addEventListener("keydown", ({ code }) => {
     switch (code) {
