@@ -20,20 +20,16 @@ const elements = {
 
 const squareSize = 35;
 
-const rows = 20;
-const columns = 10;
+resizeCanvas(canvas, 10, 20, squareSize);
+resizeCanvas(nextPieces, 6, 13, squareSize);
 
-canvas.width = columns * squareSize;
-canvas.height = rows * squareSize;
+function resizeCanvas(canvasToResize, cols, rows, size) {
+    canvasToResize.width = cols * squareSize;
+    canvasToResize.height = rows * squareSize;
 
-canvas.style.width = canvas.width;
-canvas.style.height = canvas.height;
-
-nextPieces.width = 6 * squareSize;
-nextPieces.height = 13 * squareSize;
-
-nextPieces.style.width = nextPieces.width;
-nextPieces.style.height = nextPieces.height;
+    canvasToResize.style.width = canvasToResize.width;
+    canvasToResize.style.height = canvasToResize.height;
+}
 
 const tetris = new Tetris(elements, rows, columns, ctx);
 
@@ -47,8 +43,8 @@ const sections = {
     game: {
         section: document.querySelector("#game"),
         buttons: {
-            pause: document.querySelector("#pause_btn")
-        }
+            pause: document.querySelector("#pause_btn"),
+        },
     },
     pause: {
         section: document.querySelector("#gamePause"),
@@ -134,7 +130,7 @@ sections.gameOver.buttons.mute.addEventListener("click", toggleMute)
 sections.game.buttons.pause.addEventListener("click", () => {
     if (tetris.gameOver) return;
     togglePause();
-})
+});
 
 document.addEventListener("keydown", ({ code }) => {
     switch (code) {
