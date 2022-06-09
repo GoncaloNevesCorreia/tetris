@@ -20,7 +20,10 @@ const elements = {
 
 const squareSize = 35;
 
-resizeCanvas(canvas, 10, 20, squareSize);
+const gameRows = 20;
+const gameColumns = 10;
+
+resizeCanvas(canvas, gameColumns, gameRows, squareSize);
 resizeCanvas(nextPieces, 6, 13, squareSize);
 
 function resizeCanvas(canvasToResize, cols, rows, size) {
@@ -31,7 +34,7 @@ function resizeCanvas(canvasToResize, cols, rows, size) {
     canvasToResize.style.height = canvasToResize.height;
 }
 
-const tetris = new Tetris(elements, rows, columns, ctx);
+const tetris = new Tetris(elements, gameRows, gameColumns, ctx);
 
 const sections = {
     mainMenu: {
