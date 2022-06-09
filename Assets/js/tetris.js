@@ -37,8 +37,8 @@ class Tetris extends EventTarget {
             isMuted: false,
             volume: {
                 high: 0.15,
-                low: 0.05
-            }
+                low: 0.05,
+            },
         };
     }
 
@@ -201,8 +201,9 @@ class Tetris extends EventTarget {
     }
 
     playMusic() {
+        if (this.sounds.isMuted) return;
 
-        if (this.sounds.isMuted) return
+        this.sounds.music.loop = true;
         this.sounds.music.currentTime = 0;
         this.sounds.music.volume = this.sounds.volume.high;
         this.sounds.music.play();
