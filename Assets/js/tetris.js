@@ -35,11 +35,23 @@ class Tetris extends EventTarget {
         };
 
         this.sounds = {
-            music: new Audio("Assets/sounds/main_theme.mp3"),
             isMuted: false,
             volume: {
                 high: 0.15,
                 low: 0.05,
+            },
+            list: {
+                music: new Audio("Assets/sounds/main_theme.mp3"),
+                pause: new Audio("Assets/sounds/pause.mp3"),
+                continue: new Audio("Assets/sounds/continue.mp3"),
+                game_over: new Audio("Assets/sounds/game_over.mp3"),
+                rotate: new Audio("Assets/sounds/rotate.mp3"),
+                block_fall: new Audio("Assets/sounds/block_fall.mp3"),
+                hard_block_fall: new Audio("Assets/sounds/hard_block_fall.mp3"),
+                single: new Audio("Assets/sounds/single.mp3"),
+                double: new Audio("Assets/sounds/double.mp3"),
+                triple: new Audio("Assets/sounds/triple.mp3"),
+                tetris: new Audio("Assets/sounds/tetris.mp3"),
             },
         };
     }
@@ -142,6 +154,8 @@ class Tetris extends EventTarget {
         piece.rotate(nextRotationIndex, kick);
 
         this.board.addPiece(piece);
+
+        this.playSound("rotate");
     };
 
     hardDrop = () => {
@@ -212,15 +226,24 @@ class Tetris extends EventTarget {
     playMusic() {
         if (this.sounds.isMuted) return;
 
-        this.sounds.music.loop = true;
-        this.sounds.music.currentTime = 0;
-        this.sounds.music.volume = this.sounds.volume.high;
-        this.sounds.music.play();
+        this.sounds.list.music.loop = true;
+        this.sounds.list.music.currentTime = 0;
+        this.sounds.list.music.volume = this.sounds.volume.high;
+        this.sounds.list.music.play();
     }
 
     stopMusic() {
-        this.sounds.music.pause();
-        this.sounds.music.currentTime = 0;
+        this.sounds.list.music.pause();
+        this.sounds.list.music.currentTime = 0;
+    }
+
+    playSound(soundName) {
+        if (this.sounds.isMuted) return;
+
+        const sound = this.sounds.list[soundName];
+        sound.volume = this.sounds.volume.low;
+        sound.currentTime = 0;
+        sound.play();
     }
 
     gameLoop = (now) => {

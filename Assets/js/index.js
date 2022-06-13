@@ -71,7 +71,7 @@ const sections = {
 tetris.addEventListener("gameover", () => {
     sections.gameOver.section.classList.remove("hide");
 
-    tetris.sounds.music.volume = tetris.sounds.volume.low;
+    tetris.sounds.list.music.volume = tetris.sounds.volume.low;
 
     const highscore = localStorage.getItem("highscore");
 
@@ -97,7 +97,7 @@ tetris.addEventListener("rowRemoved", (event) => {
     const messageElement = `<div>
         ${messages[numOfRows]} 
         ${numOfRows * 100}
-    </div>`;    
+    </div>`;
 
     const scoreInfo = document.querySelector("#score-info");
 
@@ -201,9 +201,9 @@ function togglePause() {
     tetris.isPaused = !tetris.isPaused;
     sections.pause.section.classList.toggle("hide");
     if (tetris.isPaused) {
-        tetris.sounds.music.volume = tetris.sounds.volume.low;
+        tetris.sounds.list.music.volume = tetris.sounds.volume.low;
     } else {
-        tetris.sounds.music.volume = tetris.sounds.volume.high;
+        tetris.sounds.list.music.volume = tetris.sounds.volume.high;
     }
 }
 
