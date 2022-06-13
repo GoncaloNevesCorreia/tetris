@@ -46,8 +46,8 @@ class Tetris extends EventTarget {
                 continue: new Audio("Assets/sounds/continue.mp3"),
                 game_over: new Audio("Assets/sounds/game_over.mp3"),
                 rotate: new Audio("Assets/sounds/rotate.mp3"),
+                move: new Audio("Assets/sounds/move.mp3"),
                 block_fall: new Audio("Assets/sounds/block_fall.mp3"),
-                hard_block_fall: new Audio("Assets/sounds/hard_block_fall.mp3"),
                 single: new Audio("Assets/sounds/single.mp3"),
                 double: new Audio("Assets/sounds/double.mp3"),
                 triple: new Audio("Assets/sounds/triple.mp3"),
@@ -89,7 +89,7 @@ class Tetris extends EventTarget {
         this.piecesQueue.showNextPieces();
     }
 
-    moveDown = () => {
+    moveDown = (sound = true) => {
         const piece = this.piece;
 
         if (this.board.collision(piece.x, piece.y + 1, piece.rotation)) {
@@ -104,6 +104,10 @@ class Tetris extends EventTarget {
         this.board.addPiece(piece);
 
         this.score++;
+
+        if (sound) {
+            this.playSound("move");
+        }
     };
 
     moveLeft = () => {
@@ -116,6 +120,8 @@ class Tetris extends EventTarget {
         piece.move(piece.x - 1, piece.y);
 
         this.board.addPiece(piece);
+
+        this.playSound("move");
     };
 
     moveRight = () => {
@@ -128,6 +134,8 @@ class Tetris extends EventTarget {
         piece.move(piece.x + 1, piece.y);
 
         this.board.addPiece(piece);
+
+        this.playSound("move");
     };
 
     rotatePiece = () => {
@@ -159,9 +167,11 @@ class Tetris extends EventTarget {
     };
 
     hardDrop = () => {
-        this.moveDown();
+        this.moveDown(false);
 
-        if (this.piece.collision) return;
+        if (this.piece.collision) {
+            return;
+        }
 
         this.score++;
         this.hardDrop();
@@ -169,6 +179,7 @@ class Tetris extends EventTarget {
 
     checkGameState() {
         if (this.piece.collision) {
+            this.playSound("block_fall");
             if (this.piece.y < 0) {
                 this.endGame();
                 this.dispatchEvent(this.events.gameOver);
@@ -241,7 +252,7 @@ class Tetris extends EventTarget {
         if (this.sounds.isMuted) return;
 
         const sound = this.sounds.list[soundName];
-        sound.volume = this.sounds.volume.low;
+        sound.volume = this.sounds.volume.high;
         sound.currentTime = 0;
         sound.play();
     }
@@ -271,7 +282,7 @@ class Tetris extends EventTarget {
         }
 
         if (now - this.timestamps.dropTimer >= this.baseSpeed) {
-            if (!this.isPaused) this.moveDown();
+            if (!this.isPaused) this.moveDown(false);
             this.timestamps.dropTimer = now;
         }
     };
