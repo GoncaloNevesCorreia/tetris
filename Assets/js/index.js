@@ -20,22 +20,21 @@ const elements = {
 
 const squareSize = 35;
 
-const rows = 20;
-const columns = 10;
+const gameRows = 20;
+const gameColumns = 10;
 
-canvas.width = columns * squareSize;
-canvas.height = rows * squareSize;
+resizeCanvas(canvas, gameColumns, gameRows, squareSize);
+resizeCanvas(nextPieces, 6, 13, squareSize);
 
-canvas.style.width = canvas.width;
-canvas.style.height = canvas.height;
+function resizeCanvas(canvasToResize, cols, rows, size) {
+    canvasToResize.width = cols * size;
+    canvasToResize.height = rows * size;
 
-nextPieces.width = 6 * squareSize;
-nextPieces.height = 13 * squareSize;
+    canvasToResize.style.width = canvasToResize.width;
+    canvasToResize.style.height = canvasToResize.height;
+}
 
-nextPieces.style.width = nextPieces.width;
-nextPieces.style.height = nextPieces.height;
-
-const tetris = new Tetris(elements, rows, columns, ctx);
+const tetris = new Tetris(elements, gameRows, gameColumns, ctx);
 
 const sections = {
     mainMenu: {
@@ -47,8 +46,8 @@ const sections = {
     game: {
         section: document.querySelector("#game"),
         buttons: {
-            pause: document.querySelector("#pause_btn")
-        }
+            pause: document.querySelector("#pause_btn"),
+        },
     },
     pause: {
         section: document.querySelector("#gamePause"),
@@ -56,7 +55,7 @@ const sections = {
             resume: document.querySelector("#gamePause .resumeGameBtn"),
             newGame: document.querySelector("#gamePause .newGameBtn"),
             exit: document.querySelector("#gamePause .exitGameBtn"),
-            mute: document.querySelector("#gamePause .mute_sound_btn")
+            mute: document.querySelector("#gamePause .mute_sound_btn"),
         },
     },
     gameOver: {
@@ -64,7 +63,7 @@ const sections = {
         buttons: {
             newGame: document.querySelector("#gameOver .newGameBtn"),
             exit: document.querySelector("#gameOver .exitGameBtn"),
-            mute: document.querySelector("#gameOver .mute_sound_btn")
+            mute: document.querySelector("#gameOver .mute_sound_btn"),
         },
     },
 };
@@ -85,6 +84,26 @@ tetris.addEventListener("gameover", () => {
     }
 });
 
+tetris.addEventListener("rowRemoved", (event) => {
+    const numOfRows = event.detail;
+
+    const messages = {
+        1: "Single",
+        2: "Double",
+        3: "Triple",
+        4: "Tetris",
+    };
+
+    const messageElement = `<div>
+        ${messages[numOfRows]} 
+        ${numOfRows * 100}
+    </div>`;    
+
+    const scoreInfo = document.querySelector("#score-info");
+
+    scoreInfo.innerHTML = messageElement;
+});
+
 sections.gameOver.buttons.newGame.addEventListener("click", () => {
     sections.gameOver.section.classList.add("hide");
     tetris.newGame();
@@ -95,6 +114,8 @@ sections.gameOver.buttons.exit.addEventListener("click", () => {
 
     sections.game.section.classList.add("hide");
     sections.mainMenu.section.classList.remove("hide");
+
+    tetris.stopMusic();
 });
 
 sections.mainMenu.buttons.newGame.addEventListener("click", () => {
@@ -128,13 +149,13 @@ sections.pause.buttons.exit.addEventListener("click", () => {
     tetris.stopMusic();
 });
 
-sections.pause.buttons.mute.addEventListener("click", toggleMute)
-sections.gameOver.buttons.mute.addEventListener("click", toggleMute)
+sections.pause.buttons.mute.addEventListener("click", toggleMute);
+sections.gameOver.buttons.mute.addEventListener("click", toggleMute);
 
 sections.game.buttons.pause.addEventListener("click", () => {
     if (tetris.gameOver) return;
     togglePause();
-})
+});
 
 document.addEventListener("keydown", ({ code }) => {
     switch (code) {
@@ -148,7 +169,6 @@ document.addEventListener("keydown", ({ code }) => {
 
 function toggleMute() {
     if (tetris.sounds.isMuted) {
-
         tetris.sounds.isMuted = false;
         tetris.playMusic();
         const iconMuted = document.querySelectorAll(".fa-volume-xmark");
@@ -156,14 +176,12 @@ function toggleMute() {
 
         iconUnMuted.forEach((icon) => {
             icon.classList.remove("hide");
-        })
+        });
 
         iconMuted.forEach((icon) => {
             icon.classList.add("hide");
-        })
-
+        });
     } else {
-
         tetris.sounds.isMuted = true;
         tetris.stopMusic();
         const iconMuted = document.querySelectorAll(".fa-volume-xmark");
@@ -171,15 +189,12 @@ function toggleMute() {
 
         iconUnMuted.forEach((icon) => {
             icon.classList.add("hide");
-        })
+        });
 
         iconMuted.forEach((icon) => {
             icon.classList.remove("hide");
-        })
-
+        });
     }
-
-
 }
 
 function togglePause() {
