@@ -30,7 +30,9 @@ class Tetris extends EventTarget {
             movement: null,
         };
 
-        this.gameOverEvent = new Event("gameover");
+        this.events = {
+            gameOver: new Event("gameover"),
+        };
 
         this.sounds = {
             music: new Audio("Assets/sounds/main_theme.mp3"),
@@ -155,13 +157,22 @@ class Tetris extends EventTarget {
         if (this.piece.collision) {
             if (this.piece.y < 0) {
                 this.endGame();
-                this.dispatchEvent(this.gameOverEvent);
+                this.dispatchEvent(this.events.gameOver);
                 return;
             }
 
             const rowsRemoved = this.board.removeRows();
             this.score += rowsRemoved * 100 * this.level;
             this.lines += rowsRemoved;
+
+            if (rowsRemoved > 0) {
+                const rowRemovedEvent = new CustomEvent("rowRemoved", {
+                    detail: rowsRemoved,
+                });
+
+                this.dispatchEvent(rowRemovedEvent);
+            }
+
             if (this.score - 1000 * this.level > 0) {
                 this.level++;
                 this.baseSpeed -= 50;
@@ -175,8 +186,6 @@ class Tetris extends EventTarget {
         const keys = this.keyboardHandler.getKeysToExecute();
 
         for (const key of keys) {
-            // this.movePiece(key);
-
             key.exec();
 
             key.needToPress = false;

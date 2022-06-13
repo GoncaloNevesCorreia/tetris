@@ -87,12 +87,12 @@ body {
     padding: 10rem 2rem 5rem 2rem;
 }
 
-#mainMenu>div>img {
+#mainMenu > div > img {
     max-width: 100%;
     max-height: 100%;
 }
 
-#mainMenu>div {
+#mainMenu > div {
     position: absolute;
     top: -20%;
     left: 50%;
@@ -128,8 +128,8 @@ body {
     margin: 2rem 0;
 }
 
-#score-section .menu-container>div,
-#game-section .menu-container>div {
+#score-section .menu-container > div,
+#game-section .menu-container > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -239,7 +239,8 @@ body {
         transform: scale(1);
         color: pink;
         -webkit-text-stroke: 3px red;
-        filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 3px red) drop-shadow(0 0 5px red) hue-rotate(10turn);
+        filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)
+            drop-shadow(0 0 3px red) drop-shadow(0 0 5px red) hue-rotate(10turn);
     }
 
     50% {
@@ -264,10 +265,8 @@ body {
     }
 }
 
-
 #pause_btn,
 .mute_sound_btn {
-
     position: fixed !important;
     min-width: auto !important;
     bottom: 20px;
@@ -294,4 +293,35 @@ body {
     right: 20px;
     top: 60px;
     padding: 1rem !important;
+}
+
+#score-info {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: block !important;
+}
+
+#score-info div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    animation: fading-text 2s forwards;
+    font-size: 2rem;
+    color: white;
+    pointer-events: none;
+    user-select: none;
+}
+
+@keyframes fading-text {
+    0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -200%);
+        opacity: 0;
+    }
 }

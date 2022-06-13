@@ -84,6 +84,26 @@ tetris.addEventListener("gameover", () => {
     }
 });
 
+tetris.addEventListener("rowRemoved", (event) => {
+    const numOfRows = event.detail;
+
+    const messages = {
+        1: "Single",
+        2: "Double",
+        3: "Triple",
+        4: "Tetris",
+    };
+
+    const messageElement = `<div>
+        ${messages[numOfRows]} 
+        ${numOfRows * 100}
+    </div>`;    
+
+    const scoreInfo = document.querySelector("#score-info");
+
+    scoreInfo.innerHTML = messageElement;
+});
+
 sections.gameOver.buttons.newGame.addEventListener("click", () => {
     sections.gameOver.section.classList.add("hide");
     tetris.newGame();
@@ -94,6 +114,8 @@ sections.gameOver.buttons.exit.addEventListener("click", () => {
 
     sections.game.section.classList.add("hide");
     sections.mainMenu.section.classList.remove("hide");
+
+    tetris.stopMusic();
 });
 
 sections.mainMenu.buttons.newGame.addEventListener("click", () => {
