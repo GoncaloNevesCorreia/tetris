@@ -202,6 +202,7 @@ body {
 
 #loader p:nth-child(1) {
     animation: var(--effect);
+    margin-right: 2rem;
 }
 
 #loader p:nth-child(2) {
@@ -226,6 +227,10 @@ body {
 
 #loader p:nth-child(7) {
     animation: var(--effect) 0.75s;
+}
+
+#loader p:nth-child(8) {
+    animation: var(--effect) 0.875s;
 }
 
 @keyframes hover {
