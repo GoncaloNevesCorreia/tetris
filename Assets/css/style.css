@@ -233,6 +233,10 @@ body {
     animation: var(--effect) 0.875s;
 }
 
+#loader p:nth-child(9) {
+    animation: var(--effect) 1s;
+}
+
 @keyframes hover {
     0% {
         transform: scale(0.5);
