@@ -96,10 +96,8 @@ body {
     position: absolute;
     top: -20%;
     left: 50%;
-
     transform: translateX(-50%);
-
-    width: 280px;
+    width: 17.5rem;
 }
 
 #score-section .menu-container,
@@ -332,5 +330,19 @@ body {
     100% {
         transform: translate(-50%, -200%);
         opacity: 0;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 767.98px) {
+    #mainMenu {
+        min-width: 90% !important;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    html {
+        font-size: 12px !important;
     }
 }
