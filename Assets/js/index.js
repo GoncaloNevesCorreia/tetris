@@ -87,6 +87,8 @@ tetris.addEventListener("gameover", () => {
 });
 
 tetris.addEventListener("rowRemoved", (event) => {
+    const scoreInfo = document.querySelector("#score-info");
+
     const numOfRows = event.detail;
 
     const messages = {
@@ -103,14 +105,15 @@ tetris.addEventListener("rowRemoved", (event) => {
         4: "tetris",
     };
 
-    const messageElement = `<div>
-        ${messages[numOfRows]} 
-        ${numOfRows * 100}
-    </div>`;
+    const messageElement = document.createElement("div");
 
-    const scoreInfo = document.querySelector("#score-info");
+    messageElement.textContent = `${messages[numOfRows]} ${numOfRows * 100}`;
 
-    scoreInfo.innerHTML = messageElement;
+    scoreInfo.append(messageElement);
+
+    setTimeout(() => {
+        messageElement.remove();
+    }, 2000);
 
     tetris.playSound(sounds[numOfRows]);
 });
