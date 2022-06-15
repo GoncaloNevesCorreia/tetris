@@ -96,10 +96,8 @@ body {
     position: absolute;
     top: -20%;
     left: 50%;
-
     transform: translateX(-50%);
-
-    width: 280px;
+    width: 17.5rem;
 }
 
 #score-section .menu-container,
@@ -202,6 +200,7 @@ body {
 
 #loader p:nth-child(1) {
     animation: var(--effect);
+    margin-right: 2rem;
 }
 
 #loader p:nth-child(2) {
@@ -226,6 +225,14 @@ body {
 
 #loader p:nth-child(7) {
     animation: var(--effect) 0.75s;
+}
+
+#loader p:nth-child(8) {
+    animation: var(--effect) 0.875s;
+}
+
+#loader p:nth-child(9) {
+    animation: var(--effect) 1s;
 }
 
 @keyframes hover {
@@ -323,5 +330,21 @@ body {
     100% {
         transform: translate(-50%, -200%);
         opacity: 0;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 767.98px) {
+    #mainMenu,
+    #gameOver div:first-of-type,
+    #gamePause div:first-of-type {
+        min-width: 90% !important;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    html {
+        font-size: 12px !important;
     }
 }

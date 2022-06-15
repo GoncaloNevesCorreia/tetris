@@ -82,9 +82,13 @@ tetris.addEventListener("gameover", () => {
         localStorage.setItem("highscore", tetris.score);
         highscoreElement.textContent = tetris.score;
     }
+
+    tetris.playSound("game_over");
 });
 
 tetris.addEventListener("rowRemoved", (event) => {
+    const scoreInfo = document.querySelector("#score-info");
+
     const numOfRows = event.detail;
 
     const messages = {
@@ -94,14 +98,24 @@ tetris.addEventListener("rowRemoved", (event) => {
         4: "Tetris",
     };
 
-    const messageElement = `<div>
-        ${messages[numOfRows]} 
-        ${numOfRows * 100}
-    </div>`;
+    const sounds = {
+        1: "single",
+        2: "double",
+        3: "triple",
+        4: "tetris",
+    };
 
-    const scoreInfo = document.querySelector("#score-info");
+    const messageElement = document.createElement("div");
 
-    scoreInfo.innerHTML = messageElement;
+    messageElement.textContent = `${messages[numOfRows]} ${numOfRows * 100}`;
+
+    scoreInfo.append(messageElement);
+
+    setTimeout(() => {
+        messageElement.remove();
+    }, 2000);
+
+    tetris.playSound(sounds[numOfRows]);
 });
 
 sections.gameOver.buttons.newGame.addEventListener("click", () => {
@@ -202,8 +216,10 @@ function togglePause() {
     sections.pause.section.classList.toggle("hide");
     if (tetris.isPaused) {
         tetris.sounds.list.music.volume = tetris.sounds.volume.low;
+        tetris.playSound("pause");
     } else {
         tetris.sounds.list.music.volume = tetris.sounds.volume.high;
+        tetris.playSound("continue");
     }
 }
 
