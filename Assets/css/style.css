@@ -260,6 +260,8 @@ body {
 .fade-out {
     animation: fadeOut 2s;
     opacity: 1;
+    pointer-events: none;
+    user-select: none;
 }
 
 @keyframes fadeOut {
@@ -297,7 +299,7 @@ body {
 
 .mute_sound_btn {
     bottom: unset;
-    right: 20px;
+    right: -20px;
     top: 60px;
     padding: 1rem !important;
 }
@@ -333,6 +335,44 @@ body {
     }
 }
 
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 1199.98px) {
+    #score-section .menu-container,
+    #game-section .menu-container {
+        min-width: 200px;
+        margin: 0 1rem;
+    }
+
+    .board-container {
+        min-width: 300px !important;
+    }
+
+    .side-title,
+    #score,
+    #lines,
+    #level,
+    #highscore {
+        font-size: 2rem;
+    }
+
+    .cup {
+        font-size: 5rem;
+    }
+
+    html {
+        font-size: 14px !important;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 991.98px) {
+    #score-section .menu-container,
+    #game-section .menu-container {
+        min-width: 200px;
+        margin: 0 1rem;
+    }
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 767.98px) {
     #mainMenu,
@@ -340,11 +380,35 @@ body {
     #gamePause div:first-of-type {
         min-width: 90% !important;
     }
+
+    #game-section {
+        justify-content: space-between;
+    }
+
+    .menu-container {
+        min-width: 0 !important;
+    }
+
+    .highscore-section span {
+        font-size: 1.5rem !important;
+    }
+
+    .highscore-section i {
+        display: none;
+    }
+
+    html {
+        font-size: 12px !important;
+    }
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
     html {
-        font-size: 12px !important;
+        font-size: 10px !important;
+    }
+
+    .menu-container {
+        min-width: 0 !important;
     }
 }
