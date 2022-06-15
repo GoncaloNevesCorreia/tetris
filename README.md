@@ -36,6 +36,6 @@ Este projeto utiliza verificações de colisões, animações e “Keyboard even
 ### Relatório
 Nesta secção apresenta-se o link de leitura para o relatório do projeto.
 
-* [Relatório](ipsantarem-my.sharepoint.com/:w:/g/personal/190100365_esg_ipsantarem_pt/EZzxYywaAJFMiPkJlTmpJ8QBIeB7Y3fBzfKtRamecUF5cQ?email=antonio.roberto%40esg.ipsantarem.pt&e=H4IZ7N)
+* [Relatório](https://ipsantarem-my.sharepoint.com/:w:/g/personal/190100365_esg_ipsantarem_pt/EZzxYywaAJFMiPkJlTmpJ8QBIeB7Y3fBzfKtRamecUF5cQ?e=KzOQsH)
 
 <p align="right">(<a href="#top">Voltar ao início</a>)</p>
