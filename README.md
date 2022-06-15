@@ -17,11 +17,11 @@
   <summary>Tabela de Conteúdos</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Sobre o Projeto</a>
-      <ul>
-        <li><a href="#built-with">Relatório</a></li>
-      </ul>
-    </li>   
+      <a href="#Sobre o Projeto">Sobre o Projeto</a>
+    </li>  
+    <li>
+      <a href="#Relatório">Relatório</a>
+    <li>
  </ol>
 </details>
 
