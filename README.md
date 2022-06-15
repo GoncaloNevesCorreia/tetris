@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://goncalonevescorreia.github.io/tetris/">
-    <img src="Assets/images/layout/logo.png" alt="Logo" width="80" height="80">
+    <img src="Assets/images/layout/logo.png" alt="Logo" width="200" height="149.54">
   </a>
 
   <h3 align="center">Projeto Aplicações Multimédia</h3>
@@ -15,10 +15,12 @@
 
 <details>
   <summary>Tabela de Conteúdos</summary>
+  
   <ol>
-    <li>  <a href="#Sobre o Projeto">Sobre o Projeto</a> </li>  
-    <li>  <a href="#Relatório">Relatório</a>  <li>
- </ol>
+    <li>  <a href="#sobre-o-projeto">Sobre o Projeto</a> </li>  
+    <li>  <a href="#relatório">Relatório</a>  </li>
+  </ol>
+
 </details>
 
 
